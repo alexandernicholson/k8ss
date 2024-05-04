@@ -1,14 +1,18 @@
 # k8ss
 Listen to pods being created on your cluster. 
 
-Uses your current kube context.
+k8s*s* - Kubernetes sound.
+
 
 ## Install
+
 ```
 pipenv install
 ```
 
 ## Run
+Uses your current kube context.
+
 ```
 pipenv shell
 
