@@ -15,7 +15,7 @@ v1 = client.CoreV1Api()
 # Create a Rich console
 console = Console()
 
-def watch_events(namespace=None):
+def watch_events(namespace=None, wait=False):
     # Get the current time in UTC timezone
     utc_timezone = pytz.timezone('UTC')
     current_time = datetime.datetime.now(utc_timezone)
@@ -33,13 +33,16 @@ def watch_events(namespace=None):
                 # Play a WAV file
                 wave_obj = sa.WaveObject.from_wave_file("pod_creation.wav")
                 play_obj = wave_obj.play()
-                play_obj.wait_done()  # Wait until the sound is finished playing
+                if wait:
+                    play_obj.wait_done()
+                print("-", end="", flush=True)
 
 # Parse command-line arguments
 parser = argparse.ArgumentParser(description="Listen to Kubernetes events and play a sound for pod creations.")
 parser.add_argument("--namespace", "-n", default="", help="Namespace to listen to. If not provided, listen to all namespaces.")
+parser.add_argument("--wait", "-w", default=False, help="Wait for each sound to finish completely. If not provided, sounds can overlap.")
 args = parser.parse_args()
 
 # Watch events based on the command-line argument
-watch_events(args.namespace)
+watch_events(args.namespace, args.wait)
 
