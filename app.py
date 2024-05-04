@@ -29,7 +29,7 @@ def watch_events(namespace=None, wait=False):
         # Check if the event occurred after the current time
         if event_time and event_time > current_time:
             # Check if the event type is Pod creation
-            if event['type'] == 'ADDED' and event['object'].involved_object.kind == 'Pod':
+            if event['type'] == 'ADDED' and event['object'].involved_object.kind == 'Pod' and event['object'].reason == 'Created':
                 # Play a WAV file
                 wave_obj = sa.WaveObject.from_wave_file("pod_creation.wav")
                 play_obj = wave_obj.play()
